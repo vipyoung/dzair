@@ -1,0 +1,34 @@
+{% extends "template.html" %}
+{% block body %}
+
+<div class="row">
+    <div class="media">
+      <div class="media-left media-middle">
+        <a href="#">
+          <img class="media-object" src="{{url_for('static', filename='img/Mfuse.png')}}" alt="Mfuse example" style="max-width: 200px; height: auto;">
+        </a>
+      </div>
+      <div class="media-body">
+        <h4 class="media-heading">MapFuse</h4>
+        Whether you have different models of the same road network, different versions of it,
+            or you find it hard to keep up with changes that happen to your road model. MapFuse it the solution. Read mode
+      </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="media">
+      <div class="media-body">
+        <h4 class="media-heading">WEDGE</h4>
+       You mange a large fleed to vehicles that generates GPS data, but you still rely on commercial map engines for route
+          planning and ETA estimations? WEDGE -- your private traffic routing engine -- is going to be your best friend.
+      </div>
+        <div class="media-right media-middle">
+        <a href="#">
+          <img class="media-object" src="{{url_for('static', filename='img/wedge.png')}}" alt="Mfuse example" style="max-width: 200px; height: auto;">
+        </a>
+      </div>
+    </div>
+</div>
+{% endblock %}
+
