@@ -27,6 +27,7 @@ function highlightFeature(e) {
     info.update(layer.feature.properties);
 }
 
+var geojson;
 function resetHighlight(e) {
     geojson.resetStyle(e.target);
     info.update();
@@ -96,6 +97,9 @@ info.onAdd = function (map) {
     return this._div;
 };
 
+geojson = L.geoJson(commData, {style: style, onEachFeature: onEachFeature}).addTo(map);
+
+
 // method that we will use to update the control based on feature properties passed
 info.update = function (props) {
     this._div.innerHTML = '<h4>' +  (props ?
@@ -115,7 +119,6 @@ info.addTo(map);
 	*/
 
 
-	L.geoJson(commData, {style: style, onEachFeature: onEachFeature}).addTo(map);
 	
 	// load base map segments GeoJSON
 	/* var existingSegStyle = {
@@ -129,20 +132,21 @@ info.addTo(map);
 			ExistingSegs_Layer.addData(data);
 	});
 	*/
+	/*
 	// Layer configuration/Management
 	var baseMaps = {
 		"Streets": streets,
 		"Satellite": satellite
 	};
 
-	var overlayMaps = {
+      	var overlayMaps = {
 		// "BaseMap": ExistingSegs_Layer,
 		"Communes": Comm_Layer
 	};
 	// var controller = L.control.layers(baseMaps, overlayMaps);
 	var controller = L.control.layers(overlayMaps);
 	controller.addTo(map);
-
+	*/
 
 </script>
 
