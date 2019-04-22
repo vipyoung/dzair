@@ -1,13 +1,73 @@
 {% extends "template.html" %}
 {% block qartatron %}
 	<h1>Vote Map</h1>
-	<p> Timely information about the spreading of boycott in Algeria.</p>
+	<p> Timely information about the boycott spread of July 4th elections in Algeria.</p>
 {% endblock %}
 
 {% block body%}
 
-<div id="map" style="height:600px;"></div>
+<div id='stats' style="width:600px; height:70px">
+        <h2> Communes Pro #Yatnahaw_Ga3:<span style='color:#EB3838'> <b>51</b></span><span style='color:gray'> / 1541 </span></h2>
+Link to source file: <a href='https://docs.google.com/spreadsheets/d/1DSTpF7yRuL4m5RMPEE0iqOMttbyD4Qa9biRobZMlfPk/edit?usp=sharing' target='_blank'> List Communes </a>
+</div>
+
+<div id="map" style="height:1000px;"></div>
+<script src="{{ url_for('static', filename='data/communes_vote.js') }}"></script>
 <script>
+
+
+function highlightFeature(e) {
+    var layer = e.target;
+
+    layer.setStyle({
+        weight: 5,
+        color: '#666',
+        dashArray: '',
+        fillOpacity: 0.7
+    });
+
+    if (!L.Browser.ie && !L.Browser.opera && !L.Browser.edge) {
+        layer.bringToFront();
+    }
+    info.update(layer.feature.properties);
+}
+
+var geojson;
+function resetHighlight(e) {
+    geojson.resetStyle(e.target);
+    info.update();
+}
+
+function zoomToFeature(e) {
+    map.fitBounds(e.target.getBounds());
+}
+
+function onEachFeature(feature, layer) {
+    layer.on({
+        mouseover: highlightFeature,
+        mouseout: resetHighlight,
+        click: zoomToFeature
+    });
+}
+
+function getColor(d){
+	return d == 1 ? '#F3EEEE' :
+		d == 0 ? '#EB3838':
+			'#000000';
+	}
+
+function style(feature) {
+    return {
+        fillColor: getColor(feature.properties.VOTE),
+        weight: 1,
+        opacity: 0.5,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
+
+
 
 	// Initialize the tile layers (base layers)
 	var mapbox_sa_apikey = 'pk.eyJ1IjoidmlweW91bmciLCJhIjoiY2loZnp0OHVpMDRtcHRyajczeXVjMnJ6OSJ9.0fiqWEbVdr81UlgrRAquBw',
@@ -22,7 +82,7 @@
 			accessToken: mapbox_sa_apikey
 		}),
 		streets = L.tileLayer(mapboxUrl, {
-			id: 'mapbox.streets',
+			id: 'mapbox.light',
 			attribution: mapboxAttribution,
 			accessToken: mapbox_sa_apikey
 		});
@@ -34,6 +94,26 @@
 		layers: [streets]
 	});
 
+var info = L.control();
+
+info.onAdd = function (map) {
+    this._div = L.DomUtil.create('div', 'info'); // create a div with a class "info"
+    this.update();
+    return this._div;
+};
+
+geojson = L.geoJson(commData, {style: style, onEachFeature: onEachFeature}).addTo(map);
+
+
+// method that we will use to update the control based on feature properties passed
+info.update = function (props) {
+    this._div.innerHTML = '<h4>' +  (props ?
+        '<b>' + props.NAME_1 + '</b> | ' + props.NAME_2 + '</h4> '
+        : 'Hover over a commune');
+};
+
+info.addTo(map);
+
     // load a tile layer
    /* L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
@@ -43,19 +123,8 @@
     }).addTo(map);
 	*/
 
-	// load new segments GeoJSON
-	var newSegStyle = {
-    	"color": "red",
-    	"weight": 1,
-    	"opacity": 0.65
-	};
-	var Comm_Layer = L.geoJSON(null, {style: newSegStyle}).addTo(map);
-	$.getJSON("{{url_for('static', filename='data/communes_vote.geojson')}}",
-		function(data) {
-			Comm_Layer.addData(data);
-	});
 
-
+	
 	// load base map segments GeoJSON
 	/* var existingSegStyle = {
     	"color": "black",
@@ -68,20 +137,21 @@
 			ExistingSegs_Layer.addData(data);
 	});
 	*/
+	/*
 	// Layer configuration/Management
 	var baseMaps = {
 		"Streets": streets,
 		"Satellite": satellite
 	};
 
-	var overlayMaps = {
+      	var overlayMaps = {
 		// "BaseMap": ExistingSegs_Layer,
 		"Communes": Comm_Layer
 	};
 	// var controller = L.control.layers(baseMaps, overlayMaps);
 	var controller = L.control.layers(overlayMaps);
 	controller.addTo(map);
-
+	*/
 
 </script>
 
