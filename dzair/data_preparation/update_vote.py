@@ -34,7 +34,7 @@ with open(output_file, 'w') as g:
 	g.write('var commData = %s;' % json.dumps(x))
 
 # write wilaya js
-
+print('nb wilayas:%s' % (len(w_ids)))
 features = []
 with open('wilayas.geojson') as f:
 	x = json.load(f)
