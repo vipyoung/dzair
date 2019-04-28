@@ -10,3 +10,34 @@
     margin: 0 0 5px;
     color: #777;
 }
+
+.color {
+    border: 1px solid;
+    height: 12px;
+    width: 12px;
+    margin-right: 3px;
+    float: left;
+      }   
+
+.red {
+        background: #C00;
+}
+.yellow {
+    background: #FF3;
+  }
+
+.green {
+    background: #337F00;
+  }
+
+.blue {
+    background: #06C;
+  }
+
+.purple {
+    background: #63C;
+  }
+.gray {
+        background: #989898;
+}
+

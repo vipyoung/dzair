@@ -7,7 +7,7 @@
 {% block body%}
 
 <div id='stats' style="width:700px; height:50px">
-        <h2> # Communes Pro #Yatnahaw_Ga3:<span style='color:#EB3838'> <b>55</b></span><span style='color:gray'> / 1541 </span></h2> </div>
+        <h2> # Municipalities Pro #Yatnahaw_Ga3:<span style='color:#EB3838'> <b>55</b></span><span style='color:gray'> / 1541 </span></h2> </div>
 <div id='stats' style="width:1000px; height:70px">
         <h2> # Wilayas involved:<span style='color:#EB3838'> <b>11</b></span><span style='color:gray'> / 48 </span></h2>
 Link to source file: <a href='https://docs.google.com/spreadsheets/d/1DSTpF7yRuL4m5RMPEE0iqOMttbyD4Qa9biRobZMlfPk/edit?usp=sharing' target='_blank'> List Communes </a>
@@ -15,11 +15,11 @@ Link to source file: <a href='https://docs.google.com/spreadsheets/d/1DSTpF7yRuL
 </div>
 
 <div id="map" style="height:1000px;"></div>
+
 <script src="{{ url_for('static', filename='data/communes_vote.js') }}"></script>
 <script src="{{ url_for('static', filename='data/wilayas_vote.js') }}"></script>
+
 <script>
-
-
 function highlightFeature(e) {
     var layer = e.target;
 
@@ -62,6 +62,14 @@ function getColor(d){
 			'#000000';
 	}
 
+function getColorParty(d){
+	return d == 'FLN' ? 'green' :
+	       d == 'FFS' ? 'red':
+	       d == 'RCD' ? 'blue':
+	       d == 'RND' ? 'yellow':   
+			'#000000';
+	}
+
 function style(feature) {
     return {
         fillColor: getColor(feature.properties.VOTE),
@@ -73,6 +81,16 @@ function style(feature) {
     };
 }
 
+function styleParty(feature) {
+    return {
+        fillColor: getColorParty(feature.properties.PARTY),
+        weight: 1,
+        opacity: 0.5,
+        color: 'white',
+        dashArray: '3',
+        fillOpacity: 0.7
+    };
+}
 
 
 // Initialize the tile layers (base layers)
@@ -110,6 +128,24 @@ info.onAdd = function (map) {
 
 geojson = L.geoJson(commData, {style: style, onEachFeature: onEachFeature}).addTo(map);
 geojson_wilaya = L.geoJson(wilaData, {style: style, onEachFeature: onEachFeature});
+geojson_municipality_party = L.geoJson(commData, {style: styleParty, onEachFeature: onEachFeature});
+
+
+
+// add legend to map
+var party_legend = [{"name":"FFS", "color": "color red", "color_code": "C00"}, {"name":"RCD", "color": "color blue", "color_code": "06C"}, {"name": "PFLN", "color": "color green", "color_code": "337F00"}, {"name":"RND", "color": "color yellow", "color_code": "FF3"}, {"name":"Others", "color": "color gray", "color_code": "989898"}];
+
+var legend = L.control({position: 'topleft'});
+
+legend.onAdd = function (map) {
+	var div = L.DomUtil.create('div', 'info legend');
+	for (var i = 0; i < party_legend.length; i++) {
+		//div.innerHTML += '<div style="width:60px; height:60px; background:' + party_legend[i].color + '"/> '+ party_legend[i].name + '</br>'; 
+		div.innerHTML += '<div class="' + party_legend[i].color + '"></div> '+ party_legend[i].name  + '</br>'; 
+	}
+	return div;
+};
+legend.addTo(map);
 
 
 // method that we will use to update the control based on feature properties passed
@@ -129,8 +165,9 @@ var baseMaps = {
 };
 
 var overlayMaps = {
-	"Wilayas": geojson_wilaya,
-	"Communes": geojson
+	"Municipalities": geojson,
+	"Communes Party": geojson_municipality_party,
+	"Wilayas": geojson_wilaya
 };
 var controller = L.control.layers(baseMaps, overlayMaps);
 // var controller = L.control.layers(overlayMaps);
