@@ -29,29 +29,12 @@ class User(UserMixin):
 def index():
 	return render_template('index.html')
 
-@app.route('/geocoding')
-def geocoding():
-	return render_template('geocoding.html')
-
-@app.route('/directions')
-def directions():
-	return render_template('directions.html')
-
-@app.route('/qdirections_fs')
-@login_required
-def qdirections_fs():
-	return render_template('qdirections_fs.html')
-
-@app.route('/eta')
-@login_required
-def eta():
-	return render_template('eta.html')
+@app.route('/twitter')
+#@login_required
+def twitter():
+	return render_template('twitter.html')
 
 
-@app.route('/mapfuse')
-@login_required
-def mapfuse():
-	return render_template('mapfuse.html')
 
 @app.route('/lab')
 def lab():
