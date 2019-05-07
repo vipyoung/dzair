@@ -9,9 +9,33 @@
 
 <script src="{{ url_for('static', filename='data/hashtags.js') }}"></script>
 <script src="{{ url_for('static', filename='data/users.js') }}"></script>
+<script src="{{ url_for('static', filename='data/ts_daily.js') }}"></script>
+<script src="{{ url_for('static', filename='data/ts_hourly.js') }}"></script>
 
 <div class="ocntainer-fluid">
 	<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Daily Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="daily_volumes" style="height:300px">
+				   	</canvas>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-8">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Hourly Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="hourly_volumes" style="height:300px">
+				   	</canvas>
+				</div>
+			</div>
+		</div>
 		<div class="col-lg-6">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
@@ -43,9 +67,16 @@
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
 	$("#top_hashtags").jQCloud(hashtags, {shape:'elliptical'});
 	$("#top_users").jQCloud(users, {shape:'elliptical'});
-      });
-      $(document).ready(function() {
-        // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
+	var ctx = $('#daily_volumes');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: line_daily
+	});
+	var ctx_hourly = $('#hourly_volumes');
+	var myChart = new Chart(ctx_hourly, {
+		type: 'line',
+		data: line_hourly
+	});
       });
 
 </script>
