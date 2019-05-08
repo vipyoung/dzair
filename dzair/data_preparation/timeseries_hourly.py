@@ -24,7 +24,7 @@ if __name__ == '__main__':
 		for line in f:
 			try:
 				o = json.loads(line)
-				h_ts[to_ts_day(o['created_at'])] += 1
+				h_ts[to_ts_h(o['created_at'])] += 1
 			except:
 				continue
 
@@ -36,7 +36,7 @@ if __name__ == '__main__':
 		data.append(h_ts[k])
 
 	with open(fout, 'w') as g:
-		g.write("var line_daily = {'labels': [%s], 'datasets': [{'label': 'Daily Volumes', 'data': [%s]}]}" % (','.join('"%s"' % _ for _ in labels), ','.join(map(str, data))))
+		g.write("var line_hourly = {'labels': [%s], 'datasets': [{'label': 'Daily Volumes', 'data': [%s]}]}" % (','.join(["'%s'" % _ for _ in labels]), ','.join(map(str, data))))
 
 
 	# # Combine the two files

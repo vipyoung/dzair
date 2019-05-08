@@ -11,6 +11,6 @@ with open(in_f) as f, open(out_f, 'w') as g:
 	for i, line in enumerate(f):
 		k,v = line.strip().split('\t')
 		l += s % (v,k)
-		if i > 80:
+		if i > 100:
 			break
 	g.write(start + l[:-2] + end)

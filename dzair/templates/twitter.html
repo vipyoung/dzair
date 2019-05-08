@@ -9,10 +9,50 @@
 
 <script src="{{ url_for('static', filename='data/hashtags.js') }}"></script>
 <script src="{{ url_for('static', filename='data/users.js') }}"></script>
+<script src="{{ url_for('static', filename='data/mentions.js') }}"></script>
 <script src="{{ url_for('static', filename='data/ts_daily.js') }}"></script>
 <script src="{{ url_for('static', filename='data/ts_hourly.js') }}"></script>
+<script src="{{ url_for('static', filename='data/gender.js') }}"></script>
 
 <div class="ocntainer-fluid">
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Period<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="time_period" style="height:100px">
+					 <h2>29 April 2019 - 07 May 2019</h2>	
+				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Number of Tweets<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="stat_tweets" style="height:100px">
+					 <h2>125,595</h2>	
+				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Number of Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="stat_users" style="height:100px">
+					 <h2>58,040</h2>
+				   	</div>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="row">
 		<div class="col-lg-4">
 			<div class="panel panel-warning">
@@ -36,7 +76,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6">
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 					<h4>Most Popular Hashtags<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
@@ -47,7 +89,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-6">
+		<div class="col-lg-4">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
 					<h4>Most Prolific Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
@@ -55,6 +97,30 @@
 				<div class="panel-body" class="panel-fit">
 					<div id="top_users" style="height:300px">
 				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Most Mentioned Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="top_mentions" style="height:300px">
+				   	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Gender<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="gender_dist" style="height:300px">
+				   	</canvas>
 				</div>
 			</div>
 		</div>
@@ -67,6 +133,7 @@
         // When DOM is ready, select the container element and call the jQCloud method, passing the array of words as the first argument.
 	$("#top_hashtags").jQCloud(hashtags, {shape:'elliptical'});
 	$("#top_users").jQCloud(users, {shape:'elliptical'});
+	$("#top_mentions").jQCloud(mentions, {shape:'elliptical'});
 	var ctx = $('#daily_volumes');
 	var myChart = new Chart(ctx, {
 		type: 'bar',
@@ -76,6 +143,12 @@
 	var myChart = new Chart(ctx_hourly, {
 		type: 'line',
 		data: line_hourly
+	});
+	
+	var ctx_gender = $('#gender_dist');
+	var myChart = new Chart(ctx_gender, {
+		type: 'doughnut',
+		data: gender_dist
 	});
       });
 
