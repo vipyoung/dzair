@@ -13,6 +13,7 @@
 <script src="{{ url_for('static', filename='data/ts_daily.js') }}"></script>
 <script src="{{ url_for('static', filename='data/ts_hourly.js') }}"></script>
 <script src="{{ url_for('static', filename='data/gender.js') }}"></script>
+<script src="{{ url_for('static', filename='data/languages.js') }}"></script>
 
 <div class="ocntainer-fluid">
 	<div class="row">
@@ -124,6 +125,17 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Languages<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="language_dist" style="height:300px">
+				   	</canvas>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -149,6 +161,11 @@
 	var myChart = new Chart(ctx_gender, {
 		type: 'doughnut',
 		data: gender_dist
+	});
+	var ctx_lang = $('#language_dist');
+	var myChart = new Chart(ctx_lang, {
+		type: 'doughnut',
+		data: lang_dist
 	});
       });
 

@@ -1,0 +1,1 @@
+var lang_dist = {'labels': ['Arabic','French','English', 'Others'], 'datasets': [{'label': 'Language Distribution', 'data': [40251, 39931, 25324,20089], 'backgroundColor': ['green', 'blue', 'red', 'grey']}]}
