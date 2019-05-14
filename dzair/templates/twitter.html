@@ -10,6 +10,12 @@
 <script src="{{ url_for('static', filename='data/hashtags.js') }}"></script>
 <script src="{{ url_for('static', filename='data/users.js') }}"></script>
 <script src="{{ url_for('static', filename='data/mentions.js') }}"></script>
+<script src="{{ url_for('static', filename='data/hashtags_ar.js') }}"></script>
+<script src="{{ url_for('static', filename='data/users_ar.js') }}"></script>
+<script src="{{ url_for('static', filename='data/mentions_ar.js') }}"></script>
+<script src="{{ url_for('static', filename='data/hashtags_fr.js') }}"></script>
+<script src="{{ url_for('static', filename='data/users_fr.js') }}"></script>
+<script src="{{ url_for('static', filename='data/mentions_fr.js') }}"></script>
 <script src="{{ url_for('static', filename='data/ts_daily.js') }}"></script>
 <script src="{{ url_for('static', filename='data/ts_hourly.js') }}"></script>
 <script src="{{ url_for('static', filename='data/gender.js') }}"></script>
@@ -58,22 +64,68 @@
 		<div class="col-lg-4">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-					<h4>Daily Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+					<h4>Arabic: Most Popular Hashtags<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
 				</div>
 				<div class="panel-body" class="panel-fit">
-					<canvas id="daily_volumes" style="height:300px">
-				   	</canvas>
+					<div id="top_hashtags_ar" style="height:200px">
+				   	</div>
 				</div>
 			</div>
 		</div>
-		<div class="col-lg-8">
+		<div class="col-lg-4">
 			<div class="panel panel-warning">
 				<div class="panel-heading">
-					<h4>Hourly Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+					<h4>Arabic: Most Prolific Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
 				</div>
 				<div class="panel-body" class="panel-fit">
-					<canvas id="hourly_volumes" style="height:300px">
-				   	</canvas>
+					<div id="top_users_ar" style="height:200px">
+				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Arabic: Most Mentioned Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="top_mentions_ar" style="height:200px">
+				   	</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>French: Most Popular Hashtags<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="top_hashtags_fr" style="height:200px">
+				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>French: Most Prolific Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="top_users_fr" style="height:200px">
+				   	</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>French: Most Mentioned Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<div id="top_mentions_fr" style="height:200px">
+				   	</div>
 				</div>
 			</div>
 		</div>
@@ -85,7 +137,7 @@
 					<h4>Most Popular Hashtags<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
 				</div>
 				<div class="panel-body" class="panel-fit">
-					<div id="top_hashtags" style="height:300px">
+					<div id="top_hashtags" style="height:200px">
 				   	</div>
 				</div>
 			</div>
@@ -96,7 +148,7 @@
 					<h4>Most Prolific Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
 				</div>
 				<div class="panel-body" class="panel-fit">
-					<div id="top_users" style="height:300px">
+					<div id="top_users" style="height:200px">
 				   	</div>
 				</div>
 			</div>
@@ -107,7 +159,7 @@
 					<h4>Most Mentioned Users<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
 				</div>
 				<div class="panel-body" class="panel-fit">
-					<div id="top_mentions" style="height:300px">
+					<div id="top_mentions" style="height:200px">
 				   	</div>
 				</div>
 			</div>
@@ -136,6 +188,30 @@
 				</div>
 			</div>
 		</div>
+		<div class="col-lg-4">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Daily Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="daily_volumes" style="height:300px">
+				   	</canvas>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="panel panel-warning">
+				<div class="panel-heading">
+					<h4>Hourly Volumes<a class="fa fa-users fa-lg pull-right" data-toggle="tooltip" title="" id="varTooltip" data-placement="bottom" style="color: #FFF;"></a></h4>
+				</div>
+				<div class="panel-body" class="panel-fit">
+					<canvas id="hourly_volumes" style="height:300px">
+				   	</canvas>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -146,6 +222,12 @@
 	$("#top_hashtags").jQCloud(hashtags, {shape:'elliptical'});
 	$("#top_users").jQCloud(users, {shape:'elliptical'});
 	$("#top_mentions").jQCloud(mentions, {shape:'elliptical'});
+	$("#top_hashtags_ar").jQCloud(hashtags_ar, {shape:'elliptical'});
+	$("#top_users_ar").jQCloud(users_ar, {shape:'elliptical'});
+	$("#top_mentions_ar").jQCloud(mentions_ar, {shape:'elliptical'});
+	$("#top_hashtags_fr").jQCloud(hashtags_fr, {shape:'elliptical'});
+	$("#top_users_fr").jQCloud(users_fr, {shape:'elliptical'});
+	$("#top_mentions_fr").jQCloud(mentions_fr, {shape:'elliptical'});
 	var ctx = $('#daily_volumes');
 	var myChart = new Chart(ctx, {
 		type: 'bar',
